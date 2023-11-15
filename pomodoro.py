@@ -13,10 +13,10 @@ def pomodoroTimer(base):
     while True:
         timer = int(time.time())
 
-        if (timer == base + 60):
+        if (timer == base + 3000):
             alrt.alert(text="time to rest!!", title="Pomodoro")
             restTimer = int(time.time())
-        elif (timer == restTimer + 30):
+        elif (timer == restTimer + 600):
             alrt.alert(text="time to study!!", title="Pomodoro")
             base = int(time.time())
 
