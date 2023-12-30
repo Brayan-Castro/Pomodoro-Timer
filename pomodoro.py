@@ -2,7 +2,6 @@ import time
 import pyautogui as alrt
 
 print("*********** Welcome to my Pomodoro Timer! ***********")
-
 print("")
  
 try:
