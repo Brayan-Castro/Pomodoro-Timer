@@ -1,37 +1,54 @@
 import time
 import pyautogui as alrt
 
-print("*********** Welcome to my Pomodoro Timer! ***********")
-print("")
- 
+def main():
+    print("*********** Welcome to my Pomodoro Timer! ***********")
+    print("")
+    usrInput = input("Do you want to start the timer? (y/n) ")
+
+    def pomodoroTimer(base, study = 50, rest = 10):
+        restTimer = 0
+        while True:
+            timer = int(time.time())
+
+            if (timer == base + (study * 60)):
+                alrt.alert(text="time to rest!!", title="Pomodoro")
+                restTimer = int(time.time())
+                hostsCleaner()
+
+            elif (timer == restTimer + (rest * 60)):
+                alrt.alert(text="time to study!!", title="Pomodoro")
+                base = int(time.time())
+                websiteBlocker()
+
+    if usrInput == 'y':
+        print("Timer is running!")
+        base = int(time.time())
+        websiteBlocker()
+        pomodoroTimer(base)
+    else:
+        exit()
+
+def websiteBlocker():
+    hosts = open("/mnt/c/Windows/System32/drivers/etc/hosts", "r+")
+    content = hosts.read()
+    siteList = ["www.youtube.com", "www.reddit.com", "www.instagram.com"]
+
+    for site in siteList:
+        if site in content:
+            print("already blocked")
+            pass
+        else:
+            hosts.write(f"127.0.0.1     {site}\n")
+
+def hostsCleaner():
+    new = open("/mnt/c/Windows/System32/drivers/etc/hosts", "w")
+    new.close()
+
 try:
-    stTime = int(input("How much study time (default = 50min)? "))
-    rsTime = int(input("How much resting time (default = 10min)?"))
-except ValueError:
-    print("Error: input isn't a number, please try again")
-    exit()
-
-print("")
-usrInput = input("Do you want to start the timer? (y/n) ")
-
-def holder():
-    base = int(time.time())
-    pomodoroTimer(base, stTime, rsTime)
-
-def pomodoroTimer(base, study = 50, rest = 10):
-    restTimer = 0
-    while True:
-        timer = int(time.time())
-
-        if (timer == base + (study * 60)):
-            alrt.alert(text="time to rest!!", title="Pomodoro")
-            restTimer = int(time.time())
-        elif (timer == restTimer + (rest * 60)):
-            alrt.alert(text="time to study!!", title="Pomodoro")
-            base = int(time.time())
-
-if usrInput == 'y':
-    print("Timer is running!")
-    holder()
-else:
-    exit()
+    if __name__ == '__main__':
+        main()
+except KeyboardInterrupt:
+    hostsCleaner()
+    print("\nThank you for using!")
+    quit()
