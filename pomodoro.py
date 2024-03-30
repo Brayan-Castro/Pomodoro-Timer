@@ -1,7 +1,6 @@
 import time
 import pyautogui as alrt
-# commit test
-# another test commit
+# new pc test commit
 def main():
     print("*********** Welcome to my Pomodoro Timer! ***********")
     print("")
